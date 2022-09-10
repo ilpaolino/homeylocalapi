@@ -1,0 +1,30 @@
+{
+  "id": "dev.dadda.homeylocalapi",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Local API",
+    "it": "Local API"
+  },
+  "description": {
+    "en": "Local API Creator for Homey",
+    "it": "Creatore di API locali per Homey"
+  },
+  "category": [
+    "internet"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Paolo Dadda",
+    "email": "ilpaolino@gmail.com"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "title": {
+    "en": "A local API request is received"
+  },
+  "titleFormatted": {
+    "en": "A [[method]] request received on url [[url]]"
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "url",
+      "placeholder": {
+        "en": "/test"
+      }
+    },
+    {
+      "type": "dropdown",
+      "name": "method",
+      "values": [
+        {
+          "id": "get",
+          "label": {
+            "en": "GET"
+          }
+        },
+        {
+          "id": "post",
+          "label": {
+            "en": "POST"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "dev.dadda.homeylocalapi",
+  "version": "1.0.0",
+  "compatibility": ">=5.0.0",
+  "sdk": 3,
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Local API",
+    "it": "Local API"
+  },
+  "description": {
+    "en": "Local API Creator for Homey",
+    "it": "Creatore di API locali per Homey"
+  },
+  "category": [
+    "internet"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Paolo Dadda",
+    "email": "ilpaolino@gmail.com"
+  },
+  "flow": {
+    "triggers": [
+      {
+        "title": {
+          "en": "A local API request is received"
+        },
+        "titleFormatted": {
+          "en": "A [[method]] request received on url [[url]]"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "url",
+            "placeholder": {
+              "en": "/test"
+            }
+          },
+          {
+            "type": "dropdown",
+            "name": "method",
+            "values": [
+              {
+                "id": "get",
+                "label": {
+                  "en": "GET"
+                }
+              },
+              {
+                "id": "post",
+                "label": {
+                  "en": "POST"
+                }
+              }
+            ]
+          }
+        ],
+        "id": "local-api-request-received"
+      }
+    ],
+    "actions": [
+      {
+        "title": {
+          "en": "Respond with..."
+        },
+        "titleFormatted": {
+          "en": "Respond with [[body]] JSON."
+        },
+        "hint": {
+          "en": "Personalize the response object"
+        },
+        "args": [
+          {
+            "type": "text",
+            "name": "body",
+            "placeholder": {
+              "en": "Body JSON response"
+            }
+          }
+        ],
+        "id": "local-api-response-with"
+      }
+    ]
+  }
+}

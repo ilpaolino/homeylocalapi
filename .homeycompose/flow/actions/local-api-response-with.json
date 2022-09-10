@@ -1,0 +1,20 @@
+{
+  "title": {
+    "en": "Respond with..."
+  },
+  "titleFormatted": {
+    "en": "Respond with [[body]] JSON."
+  },
+  "hint": {
+    "en": "Personalize the response object"
+  },
+  "args": [
+    {
+      "type": "text",
+      "name": "body",
+      "placeholder": {
+        "en": "Body JSON response"
+      }
+    }
+  ]
+}
