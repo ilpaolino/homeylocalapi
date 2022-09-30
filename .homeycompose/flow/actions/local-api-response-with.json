@@ -1,19 +1,23 @@
 {
   "title": {
-    "en": "Respond with..."
+    "en": "Respond with...",
+    "it": "Rispondi con..."
   },
   "titleFormatted": {
-    "en": "Respond with [[body]] JSON."
+    "en": "Respond with [[body]] JSON.",
+    "it": "Rispondi con [[body]] JSON."
   },
   "hint": {
-    "en": "Personalize the response object"
+    "en": "Personalize the response object",
+    "it": "Personalizza la risposta"
   },
   "args": [
     {
       "type": "text",
       "name": "body",
       "placeholder": {
-        "en": "Body JSON response"
+        "en": "Body JSON response",
+        "it": "Risposta JSON"
       }
     }
   ]

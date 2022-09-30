@@ -1,8 +1,10 @@
 {
   "title": {
-    "en": "Respond with 200"
+    "en": "Respond with 200",
+    "it": "Rispondi con codice 200"
   },
   "hint": {
-    "en": "Send an empty response with status OK (http 200)"
+    "en": "Send an empty response with status OK (http 200)",
+    "it": "Invia una risposta vuota con stato OK (http 200)"
   }
 }

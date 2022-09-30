@@ -1,16 +1,19 @@
 {
   "title": {
-    "en": "A local API request is received"
+    "en": "A local API request is received",
+    "it": "Una richiesta API locale è stata ricevuta"
   },
   "titleFormatted": {
-    "en": "A [[method]] request received on url [[url]]"
+    "en": "A [[method]] request received on url [[url]]",
+    "it": "Una richiesta [[method]] è stata ricevuta all'indirizzo [[url]]"
   },
   "args": [
     {
       "type": "text",
       "name": "url",
       "placeholder": {
-        "en": "/test"
+        "en": "/test",
+        "it": "/test"
       }
     },
     {
@@ -20,13 +23,15 @@
         {
           "id": "get",
           "label": {
-            "en": "GET"
+            "en": "GET",
+            "it": "GET"
           }
         },
         {
           "id": "post",
           "label": {
-            "en": "POST"
+            "en": "POST",
+            "it": "POST"
           }
         }
       ]
