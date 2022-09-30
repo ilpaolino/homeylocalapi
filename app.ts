@@ -69,7 +69,7 @@ class LocalApi extends Homey.App {
     /**
      * Create a http server instance that can be used to listening on port 3000.
      */
-    http.createServer({}, async (req: IncomingMessage, res: ServerResponse) => {
+    http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
       const authorizedRoute = requestReceivedArgs.find((arg: LocalApiRequestArgs) => arg.url === req.url && arg.method === req.method?.toLowerCase());
       if (authorizedRoute) {
         try {
@@ -93,7 +93,9 @@ class LocalApi extends Homey.App {
           status: 'not-found',
         }));
       }
+      // Send end of response
       res.end();
+      // Destroy the response to free up memory
       res.destroy();
     }).listen(3000, () => {
       this.log('Local API server started at port 3000');
