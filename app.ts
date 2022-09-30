@@ -1,5 +1,6 @@
 import Homey from 'homey';
 import http, { IncomingMessage, ServerResponse } from 'http';
+import { EventEmitter } from 'events';
 
 interface LocalApiRequestState {
   response: http.ServerResponse;
@@ -20,12 +21,18 @@ class LocalApi extends Homey.App {
   async onInit() {
     const requestReceivedTrigger = this.homey.flow.getTriggerCard('local-api-request-received');
     const responseWithAction = this.homey.flow.getActionCard('local-api-response-with');
+    const responseWithOk = this.homey.flow.getActionCard('local-api-respond-with-200');
 
     let requestReceivedArgs: Array<LocalApiRequestArgs> = await requestReceivedTrigger.getArgumentValues() || [];
+    const localApi = new EventEmitter();
+    localApi.on('warning', (e) => this.error('warning', e.stack));
+    localApi.on('uncaughtException', (e) => this.error('uncaughtException', e.stack));
     this.log('LocalAPI has been initialized');
 
     requestReceivedTrigger.registerRunListener(
-      async (args: LocalApiRequestArgs, state: LocalApiRequestState) => (args.url === state.request.url && args.method === state.request.method?.toLowerCase()),
+      async (args: LocalApiRequestArgs, state: LocalApiRequestState) => {
+        return (args.url === state.request.url && args.method === state.request.method?.toLowerCase());
+      },
     );
     responseWithAction.registerRunListener(
       async (args: LocalApiRequestArgs, state: LocalApiRequestState) => {
@@ -35,8 +42,22 @@ class LocalApi extends Homey.App {
         } catch (e) {
           parsedBody = { status: 'error', message: 'Invalid JSON' };
         }
-        this.log(`Parsed: ${JSON.stringify(parsedBody, null, 2)}`);
-        return parsedBody;
+        try {
+          localApi.emit('responseAction', parsedBody);
+        } catch (e) {
+          this.error(e);
+        }
+        return true;
+      },
+    );
+    responseWithOk.registerRunListener(
+      async (args: LocalApiRequestArgs, state: LocalApiRequestState) => {
+        try {
+          localApi.emit('responseAction', { status: 'ok' });
+        } catch (e) {
+          this.error(e);
+        }
+        return true;
       },
     );
 
@@ -48,21 +69,24 @@ class LocalApi extends Homey.App {
     /**
      * Create a http server instance that can be used to listening on port 3000.
      */
-    http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
+    http.createServer({}, async (req: IncomingMessage, res: ServerResponse) => {
       const authorizedRoute = requestReceivedArgs.find((arg: LocalApiRequestArgs) => arg.url === req.url && arg.method === req.method?.toLowerCase());
       if (authorizedRoute) {
-        const triggeredVal = await requestReceivedTrigger.trigger({}, { request: req, response: res });
-        const argVal = await responseWithAction.getArgumentValues();
         try {
+          requestReceivedTrigger.trigger({}, { request: req, response: res });
+
+          const argVal = await new Promise((resolve) => {
+            localApi.once('responseAction', (body:string) => {
+              resolve(body);
+            });
+          });
           res.writeHead(200, { 'Content-Type': 'application/json' });
           res.write(JSON.stringify({
             status: 'success', url: req.url, method: req.method, data: argVal,
           }));
-          this.log('Response sent');
         } catch (e) {
-          this.log('err ', e);
+          this.error(e);
         }
-        this.log(triggeredVal);
       } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.write(JSON.stringify({
@@ -70,6 +94,7 @@ class LocalApi extends Homey.App {
         }));
       }
       res.end();
+      res.destroy();
     }).listen(3000, () => {
       this.log('Local API server started at port 3000');
     });
