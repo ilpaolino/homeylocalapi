@@ -11,8 +11,8 @@
     "it": "Local API"
   },
   "description": {
-    "en": "Local API Creator for Homey",
-    "it": "Creatore di API locali per Homey"
+    "en": "Local API Creator directly hosted and server from your Homey",
+    "it": "Creatore di API locali hostato e servito dal tuo Homey"
   },
   "category": [
     "internet"
@@ -26,5 +26,30 @@
   "author": {
     "name": "Paolo Dadda",
     "email": "ilpaolino@gmail.com"
-  }
+  },
+  "contributors": {
+    "developers": [
+      {
+        "name": "Paolo Dadda",
+        "email": "ilpaolino@gmail.com"
+      }
+    ],
+    "translators": [
+      {
+        "name": "Paolo Dadda",
+        "email": "ilpaolino@gmail.com"
+      }
+    ]
+  },
+  "contributing": {
+    "donate": {
+      "paypal": {
+        "username": "PaoloDadda"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/ilpaolino/homeylocalapi/issues"
+  },
+  "source": "https://github.com/ilpaolino/homeylocalapi"
 }
