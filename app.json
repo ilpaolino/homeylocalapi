@@ -1,7 +1,7 @@
 {
   "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
   "id": "dev.dadda.homeylocalapi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "compatibility": ">=5.0.0",
   "sdk": 3,
   "platforms": [
@@ -12,8 +12,8 @@
     "it": "Local API"
   },
   "description": {
-    "en": "Local API Creator directly hosted and server from your Homey",
-    "it": "Creatore di API locali hostato e servito dal tuo Homey"
+    "en": "Local API Creator directly hosted and served from your Home Automation Hub",
+    "it": "Creatore di API locali hostato e servito dal tuo Hub Domotico"
   },
   "category": [
     "internet"
