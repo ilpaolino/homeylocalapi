@@ -2,5 +2,9 @@
   "1.0.0": {
     "en": "First Version",
     "it": "Prima Versione"
+  },
+  "1.0.1": {
+    "en": "Updated readme and added disclaimer",
+    "it": "Aggiornato readme e aggiunto disclaimer"
   }
 }
