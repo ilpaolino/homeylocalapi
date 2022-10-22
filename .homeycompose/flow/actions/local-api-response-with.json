@@ -1,15 +1,18 @@
 {
   "title": {
     "en": "Respond with...",
-    "it": "Rispondi con..."
+    "it": "Rispondi con...",
+    "de": "Anworte mit..."
   },
   "titleFormatted": {
     "en": "Respond with [[body]] JSON.",
-    "it": "Rispondi con [[body]] JSON."
+    "it": "Rispondi con [[body]] JSON.",
+    "de": "Antworte mit [[body]] JSON."
   },
   "hint": {
     "en": "Personalize the response object",
-    "it": "Personalizza la risposta"
+    "it": "Personalizza la risposta",
+    "de": "Personalisieren das Antwortobject"
   },
   "args": [
     {
@@ -17,7 +20,8 @@
       "name": "body",
       "placeholder": {
         "en": "Body JSON response",
-        "it": "Risposta JSON"
+        "it": "Risposta JSON",
+        "de": "JSON Antwort"
       }
     }
   ]

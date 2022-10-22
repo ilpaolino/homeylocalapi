@@ -8,11 +8,13 @@
   ],
   "name": {
     "en": "Local API",
-    "it": "Local API"
+    "it": "Local API",
+    "de": "Local API"
   },
   "description": {
     "en": "Local API Creator directly hosted and served from your Home Automation Hub",
-    "it": "Creatore di API locali hostato e servito dal tuo Hub Domotico"
+    "it": "Creatore di API locali hostato e servito dal tuo Hub Domotico",
+    "de": "Eine Locale API erstellen und diese wird direkt auf dem Homey verarbeitet"
   },
   "category": [
     "internet"
@@ -39,6 +41,10 @@
       {
         "name": "Paolo Dadda",
         "email": "ilpaolino@gmail.com"
+      },
+      {
+        "name": "spkesDE",
+        "email": "spkes@spkes.de"
       }
     ]
   },

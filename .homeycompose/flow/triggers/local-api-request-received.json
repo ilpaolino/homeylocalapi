@@ -1,11 +1,13 @@
 {
   "title": {
     "en": "A local API request is received",
-    "it": "Una richiesta API locale è stata ricevuta"
+    "it": "Una richiesta API locale è stata ricevuta",
+    "de": "Eine lokale API-Anforderung wird empfangen"
   },
   "titleFormatted": {
     "en": "A [[method]] request received on url [[url]]",
-    "it": "Una richiesta [[method]] è stata ricevuta all'indirizzo [[url]]"
+    "it": "Una richiesta [[method]] è stata ricevuta all'indirizzo [[url]]",
+    "de": "Eine [[method]]-Anfrage mit der URL [[url]] wurde empfangen"
   },
   "args": [
     {
