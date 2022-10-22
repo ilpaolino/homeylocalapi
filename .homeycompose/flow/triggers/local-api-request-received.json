@@ -15,7 +15,8 @@
       "name": "url",
       "placeholder": {
         "en": "/test",
-        "it": "/test"
+        "it": "/test",
+        "de": "/test"
       }
     },
     {
@@ -26,14 +27,16 @@
           "id": "get",
           "label": {
             "en": "GET",
-            "it": "GET"
+            "it": "GET",
+            "de": "GET"
           }
         },
         {
           "id": "post",
           "label": {
             "en": "POST",
-            "it": "POST"
+            "it": "POST",
+            "de": "POST"
           }
         }
       ]
