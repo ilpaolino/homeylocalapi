@@ -22,6 +22,7 @@ class LocalApi extends Homey.App {
     const requestReceivedTrigger = this.homey.flow.getTriggerCard('local-api-request-received');
     const responseWithAction = this.homey.flow.getActionCard('local-api-response-with');
     const responseWithOk = this.homey.flow.getActionCard('local-api-respond-with-200');
+    const serverPort = this.homey.settings.get('serverPort') || 3000;
 
     let requestReceivedArgs: Array<LocalApiRequestArgs> = await requestReceivedTrigger.getArgumentValues() || [];
     const localApi = new EventEmitter();
@@ -97,7 +98,7 @@ class LocalApi extends Homey.App {
       res.end();
       // Destroy the response to free up memory
       res.destroy();
-    }).listen(3000, () => {
+    }).listen(serverPort, () => {
       this.log('Local API server started at port 3000');
     });
   }
