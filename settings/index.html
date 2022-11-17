@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LocalAPI Settings</title>
+  <script
+      type="text/javascript"
+      src="/homey.js"
+      data-origin="settings"
+  />
+</head>
+<body>
+<header class="homey-header">
+  <h1 class="homey-title" data-i18n="settings.title">
+    <!-- This will be filled with the translated string with key 'settings.title'. -->
+  </h1>
+  <p class="homey-subtitle" data-i18n="settings.subtitle">
+    <!-- This field will also be translated -->
+  </p>
+</header>
+
+<fieldset class="homey-form-fieldset">
+  <legend class="homey-form-legend" data-i18n="settings.serverSettings"></legend>
+  
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="server-port" data-i18n="settings.port.label"></label>
+    <input class="homey-form-input" id="server-port" type="number" value="3000" />
+  </div>
+  <div class="homey-form-group">
+    <label class="homey-form-label" for="cors-enabled" data-i18n="settings.cors.label"></label>
+    <select class="homey-form-select" name="cors-enabled" id="cors-enabled">
+      <option value="true" data-i18n="settings.cors.enabled">Enabled</option>
+      <option value="false" data-i18n="settings.cors.disabled">Disabled</option>
+    </select>
+  </div>
+</fieldset>
+
+<button id="save" class="homey-button-primary-full" data-i18n="settings.save"></button>
+
+<script type="text/javascript">
+  function onHomeyReady(Homey) {
+    // ...
+
+    Homey.ready();
+  }
+</script>
+</body>
+</html>

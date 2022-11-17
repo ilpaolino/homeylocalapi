@@ -1,1 +1,16 @@
-{}
+{
+  "settings": {
+    "title": "Local API",
+    "subtitle": "App-Einstellungen",
+    "serverSettings": "Server-Einstellungen",
+    "port": {
+      "label": "Port",
+      "description": "Der zu überwachende Port (Standard: 3000)"
+    },
+    "cors": {
+      "label": "CORS",
+      "enable": "CORS Aktiviert",
+      "disable": "CORS Deaktiviert"
+    }
+  }
+}

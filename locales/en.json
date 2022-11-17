@@ -1,1 +1,16 @@
-{}
+{
+  "settings": {
+    "title": "Local API",
+    "subtitle": "App Settings",
+    "serverSettings": "Server Settings",
+    "port": {
+      "label": "Port",
+      "description": "The port to listen on (default: 3000)"
+    },
+    "cors": {
+      "label": "CORS",
+      "enable": "CORS Enabled",
+      "disable": "CORS Disabled"
+    }
+  }
+}
