@@ -1,17 +1,8 @@
 import Homey from 'homey';
 import http, { IncomingMessage, ServerResponse } from 'http';
 import { EventEmitter } from 'events';
-
-interface LocalApiRequestState {
-  response: http.ServerResponse;
-  request: http.IncomingMessage;
-}
-
-interface LocalApiRequestArgs {
-  url: string;
-  method: 'get' | 'post';
-  body?: string;
-}
+import LocalApiRequestArgs from './helpers/types/LocalApiRequestArgs';
+import LocalApiRequestState from './helpers/types/LocalApiRequestState';
 
 class LocalApi extends Homey.App {
 
