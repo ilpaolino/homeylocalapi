@@ -10,9 +10,12 @@ class LocalApi extends Homey.App {
    * onInit is called when the app is initialized.
    */
   async onInit() {
+    // Define Trigger Requests
     const requestReceivedTrigger = this.homey.flow.getTriggerCard('local-api-request-received');
+    // Define Actions Responses
     const responseWithAction = this.homey.flow.getActionCard('local-api-response-with');
     const responseWithOk = this.homey.flow.getActionCard('local-api-respond-with-200');
+    // Retrieve Settings
     const serverPort = this.homey.settings.get('serverPort') || 3000;
 
     let requestReceivedArgs: Array<LocalApiRequestArgs> = await requestReceivedTrigger.getArgumentValues() || [];
