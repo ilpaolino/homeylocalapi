@@ -11,6 +11,9 @@
       "label": "CORS",
       "enable": "CORS Enabled",
       "disable": "CORS Disabled"
+    },
+    "AccessControlAllowOrigin": {
+      "label": "Access-Control-Allow-Origin"
     }
   }
 }

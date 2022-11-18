@@ -99,7 +99,7 @@ class LocalApi extends Homey.App {
       // Destroy the response to free up memory
       res.destroy();
     }).listen(serverPort, () => {
-      this.log('Local API server started at port 3000');
+      this.log(`Local API server started at port ${serverPort}`);
     });
   }
 
