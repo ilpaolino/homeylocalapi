@@ -1,3 +1,12 @@
 {
-  "extends": "athom"
+  "extends": "athom",
+  "rules": {
+    "node/no-unsupported-features/es-syntax": [
+      "error",
+      { "ignores": ["modules"] }
+    ]
+  },
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
 }

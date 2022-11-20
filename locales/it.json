@@ -1,1 +1,19 @@
-{}
+{
+  "settings": {
+    "title": "Local API",
+    "subtitle": "Impostazioni App",
+    "serverSettings": "Impostazioni Server",
+    "port": {
+      "label": "Porta",
+      "description": "Porta su cui il server resta in ascolto (default 3000)"
+    },
+    "cors": {
+      "label": "CORS",
+      "enable": "CORS Abilitate",
+      "disable": "CORS Disabilitate"
+    },
+    "AccessControlAllowOrigin": {
+      "label": "Access-Control-Allow-Origin"
+    }
+  }
+}

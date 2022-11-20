@@ -10,5 +10,9 @@
   "1.0.2": {
     "en": "Added German Translation",
     "it": "Aggiunta traduzione tedesca"
+  },
+  "1.1.0": {
+    "en": "Added Settings and CORS support",
+    "it": "Aggiunte impostazioni e supporto CORS"
   }
 }
