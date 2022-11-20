@@ -112,6 +112,7 @@ class LocalApi extends Homey.App {
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         });
       } else if (this.isRouteAndMethodAuthorized(req)) {
+        // Handle request
         try {
           requestReceivedTrigger.trigger({}, { request: req, response: res });
 
@@ -128,6 +129,7 @@ class LocalApi extends Homey.App {
           this.error(e);
         }
       } else {
+        // Handle 404
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.write(JSON.stringify({
           status: 'not-found',
