@@ -21,6 +21,14 @@ class LocalApi extends Homey.App {
   }
 
   /**
+   * Retrieve CORS active status from the settings
+   */
+  isCorsActive(): boolean {
+    const corsStatus = this.homey.settings.get('corsStatus') || 'false';
+    return corsStatus === 'true';
+  }
+
+  /**
    * Check if the request is authorized to be handled by the Local API
    * @param req The node http request object
    */
@@ -103,7 +111,7 @@ class LocalApi extends Homey.App {
 
     // Create a http server instance that can be used to listening on user defined port (or 3000, default).
     http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
-      if (this.isRouteAuthorized(req) && req.method === 'OPTIONS') {
+      if (this.isRouteAuthorized(req) && req.method === 'OPTIONS' && this.isCorsActive()) {
         // Handle CORS preflight request
         const corsAcao = this.retrieveCorsConfig();
         res.writeHead(204, {
