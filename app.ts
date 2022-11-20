@@ -10,10 +10,29 @@ class LocalApi extends Homey.App {
   requestReceivedArgs: Array<LocalApiRequestArgs> = [];
 
   /**
+   * Retrieve the CORS config from the settings
+   */
+  retrieveCorsConfig(): string {
+    const corsAcao = this.homey.settings.get('corsAcao') || '*';
+    if (corsAcao === '') {
+      return '*';
+    }
+    return corsAcao;
+  }
+
+  /**
    * Check if the request is authorized to be handled by the Local API
    * @param req The node http request object
    */
   isRouteAuthorized(req: IncomingMessage): boolean {
+    return this.requestReceivedArgs.find((arg: LocalApiRequestArgs) => arg.url === req.url) !== undefined;
+  }
+
+  /**
+   * Check if the request is authorized to be handled by the Local API
+   * @param req The node http request object
+   */
+  isRouteAndMethodAuthorized(req: IncomingMessage): boolean {
     return this.requestReceivedArgs.find((arg: LocalApiRequestArgs) => arg.url === req.url && arg.method === req.method?.toLowerCase()) !== undefined;
   }
 
@@ -84,7 +103,15 @@ class LocalApi extends Homey.App {
 
     // Create a http server instance that can be used to listening on user defined port (or 3000, default).
     http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
-      if (this.isRouteAuthorized(req)) {
+      if (this.isRouteAuthorized(req) && req.method === 'OPTIONS') {
+        // Handle CORS preflight request
+        const corsAcao = this.retrieveCorsConfig();
+        res.writeHead(204, {
+          'Access-Control-Allow-Origin': corsAcao,
+          'Access-Control-Allow-Headers': 'DNT, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Range',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        });
+      } else if (this.isRouteAndMethodAuthorized(req)) {
         try {
           requestReceivedTrigger.trigger({}, { request: req, response: res });
 
