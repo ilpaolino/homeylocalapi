@@ -12,7 +12,7 @@ HOW TO USE:
 2. Set up the app in the settings page and restart it
 3. Create a new flow with the Local API app: remember to add the trigger card
 4. Personalize the flow as you like
-5. End the flow wit at least one of the following cards:
+5. End the flow with at least one of the following cards:
     - Respond with ... (remember to add the JSON response)
     - Respond with 200
 6. Save the flow and test it with a browser. The URL is `http://homey-ip:<PORT>/endpoint-name`
