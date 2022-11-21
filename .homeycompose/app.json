@@ -12,8 +12,8 @@
     "de": "Local API"
   },
   "description": {
-    "en": "Local API Creator directly hosted and served from your Home Automation Hub",
-    "it": "Creatore di API locali hostato e servito dal tuo Hub Domotico",
+    "en": "Local API Creator directly hosted and served from your Homey Hub",
+    "it": "Creatore di API locali hostato e servito dal tuo Hub Homey",
     "de": "Eine Locale API erstellen und diese wird direkt auf dem Homey verarbeitet"
   },
   "category": [
