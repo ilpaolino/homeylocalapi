@@ -111,14 +111,15 @@ class LocalApi extends Homey.App {
 
     // Create a http server instance that can be used to listening on user defined port (or 3000, default).
     http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
+      const corsAcao = this.retrieveCorsConfig();
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', corsAcao);
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, Authorization, Content-Length, X-Requested-With, XMLHttpRequest');
+
       if (this.isRouteAuthorized(req) && req.method === 'OPTIONS' && this.isCorsActive()) {
         // Handle CORS preflight request
-        const corsAcao = this.retrieveCorsConfig();
-        res.writeHead(204, {
-          'Access-Control-Allow-Origin': corsAcao,
-          'Access-Control-Allow-Headers': 'DNT, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Range',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        });
+        res.writeHead(200);
       } else if (this.isRouteAndMethodAuthorized(req)) {
         // Handle request
         try {
