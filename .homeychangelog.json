@@ -18,5 +18,9 @@
   "1.1.1": {
     "en": "Update descriptions",
     "it": "Aggiornate descrizioni app"
+  },
+  "1.1.2": {
+    "en": "Changed CORS handling",
+    "it": "Cambiata gestione CORS"
   }
 }
