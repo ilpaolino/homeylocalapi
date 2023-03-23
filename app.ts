@@ -1,6 +1,7 @@
 import Homey from 'homey';
 import http, { IncomingMessage, ServerResponse } from 'http';
 import { EventEmitter } from 'events';
+import { Socket } from 'net';
 import LocalApiRequestArgs from './helpers/types/LocalApiRequestArgs';
 import LocalApiRequestState from './helpers/types/LocalApiRequestState';
 
@@ -107,6 +108,7 @@ class LocalApi extends Homey.App {
       this.requestReceivedArgs = await requestReceivedTrigger.getArgumentValues();
       this.log('LocalAPI: args updated');
     });
+    const serverSockets = new Set<Socket>();
     this.log('LocalAPI has been initialized');
 
     // Create a http server instance that can be used to listening on user defined port (or 3000, default).
@@ -123,7 +125,7 @@ class LocalApi extends Homey.App {
       } else if (this.isRouteAndMethodAuthorized(req)) {
         // Handle request
         try {
-          requestReceivedTrigger.trigger({}, { request: req, response: res });
+          await requestReceivedTrigger.trigger({}, { request: req, response: res });
 
           const argVal = await new Promise((resolve) => {
             this.localApiEvent.once('responseAction', (body:string) => {
@@ -146,11 +148,38 @@ class LocalApi extends Homey.App {
       }
       // Send end of response
       res.end();
-      // Destroy the response to free up memory
+      // Destroy the response, the request and the listener to free up memory
+      this.localApiEvent.removeAllListeners('responseAction');
       res.destroy();
+      req.destroy();
     }).listen(serverPort, () => {
       this.log(`LocalAPI server started at port ${serverPort}`);
+    }).on('connection', (socket: Socket) => {
+      serverSockets.add(socket);
+      socket.on('close', () => {
+        serverSockets.delete(socket);
+        socket.destroy();
+      });
+    }).on('error', (e:unknown) => {
+      // Handle server error
+      if (e instanceof Error) {
+        if (e.message.includes('EADDRINUSE') || e.message.includes('EACCES')) {
+          this.error(`LocalAPI server error: port ${serverPort} already in use`);
+        } else {
+          this.error(`LocalAPI server error: ${e.message}`);
+        }
+      } else {
+        this.error('LocalAPI server error: unknown error');
+      }
     });
+
+    function destroySockets(sockets: Set<Socket>) {
+      for (const socket of sockets.values()) {
+        socket.destroy();
+      }
+    }
+
+    destroySockets(serverSockets);
   }
 
 }

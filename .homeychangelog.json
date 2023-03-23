@@ -22,5 +22,9 @@
   "1.1.2": {
     "en": "Changed CORS handling",
     "it": "Cambiata gestione CORS"
+  },
+  "1.1.3": {
+    "en": "Bugfix in server: better memory handling",
+    "it": "Bugfix su server: migliore gestione della memoria"
   }
 }

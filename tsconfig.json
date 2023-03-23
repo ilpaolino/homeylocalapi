@@ -2,11 +2,6 @@
   "extends": "@tsconfig/node12/tsconfig.json",
   "compilerOptions": {
     "allowJs": true,
-    "outDir": ".homeybuild/",
-    "module": "CommonJS",
-    "moduleResolution": "node",
-    "removeComments": true,
-    "sourceMap": true,
-    "preserveConstEnums": true
+    "outDir": ".homeybuild/"
   }
 }
