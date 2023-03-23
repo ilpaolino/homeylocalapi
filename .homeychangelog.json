@@ -14,5 +14,17 @@
   "1.1.0": {
     "en": "Added Settings and CORS support",
     "it": "Aggiunte impostazioni e supporto CORS"
+  },
+  "1.1.1": {
+    "en": "Update descriptions",
+    "it": "Aggiornate descrizioni app"
+  },
+  "1.1.2": {
+    "en": "Changed CORS handling",
+    "it": "Cambiata gestione CORS"
+  },
+  "1.1.3": {
+    "en": "Bugfix in server: better memory handling",
+    "it": "Bugfix su server: migliore gestione della memoria"
   }
 }

@@ -50,12 +50,15 @@
     const additionalCorsSettings = document.getElementById('additional-cors-settings');
     const corsAcaoInput = document.getElementById('cors-acao');
     // Display additional CORS settings when CORS is enabled
-    corsSelect.addEventListener('change', () => {
+    const displayCorsSettings = () => {
       if (corsSelect.value === 'true') {
         additionalCorsSettings.style.display = 'block';
       } else {
         additionalCorsSettings.style.display = 'none';
       }
+    };
+    corsSelect.addEventListener('change', () => {
+      displayCorsSettings();
     });
     // Retrieve information from the Homey API
     Homey.get('serverPort', (err, port) => {
@@ -82,7 +85,7 @@
         if (err) return Homey.alert(err);
       });
     });
-    
+    displayCorsSettings();
 
     Homey.ready();
   }

@@ -2,3 +2,5 @@
 /node_modules/
 /.homeybuild/
 /.idea
+test-cors.html
+test.http

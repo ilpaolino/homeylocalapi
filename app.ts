@@ -1,6 +1,7 @@
 import Homey from 'homey';
 import http, { IncomingMessage, ServerResponse } from 'http';
 import { EventEmitter } from 'events';
+import { Socket } from 'net';
 import LocalApiRequestArgs from './helpers/types/LocalApiRequestArgs';
 import LocalApiRequestState from './helpers/types/LocalApiRequestState';
 
@@ -107,22 +108,24 @@ class LocalApi extends Homey.App {
       this.requestReceivedArgs = await requestReceivedTrigger.getArgumentValues();
       this.log('LocalAPI: args updated');
     });
+    const serverSockets = new Set<Socket>();
     this.log('LocalAPI has been initialized');
 
     // Create a http server instance that can be used to listening on user defined port (or 3000, default).
     http.createServer(async (req: IncomingMessage, res: ServerResponse) => {
+      const corsAcao = this.retrieveCorsConfig();
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Access-Control-Allow-Origin', corsAcao);
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Origin, Accept, Content-Type, Authorization, Content-Length, X-Requested-With, XMLHttpRequest');
+
       if (this.isRouteAuthorized(req) && req.method === 'OPTIONS' && this.isCorsActive()) {
         // Handle CORS preflight request
-        const corsAcao = this.retrieveCorsConfig();
-        res.writeHead(204, {
-          'Access-Control-Allow-Origin': corsAcao,
-          'Access-Control-Allow-Headers': 'DNT, User-Agent, X-Requested-With, If-Modified-Since, Cache-Control, Content-Type, Range',
-          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        });
+        res.writeHead(200);
       } else if (this.isRouteAndMethodAuthorized(req)) {
         // Handle request
         try {
-          requestReceivedTrigger.trigger({}, { request: req, response: res });
+          await requestReceivedTrigger.trigger({}, { request: req, response: res });
 
           const argVal = await new Promise((resolve) => {
             this.localApiEvent.once('responseAction', (body:string) => {
@@ -145,11 +148,38 @@ class LocalApi extends Homey.App {
       }
       // Send end of response
       res.end();
-      // Destroy the response to free up memory
+      // Destroy the response, the request and the listener to free up memory
+      this.localApiEvent.removeAllListeners('responseAction');
       res.destroy();
+      req.destroy();
     }).listen(serverPort, () => {
       this.log(`LocalAPI server started at port ${serverPort}`);
+    }).on('connection', (socket: Socket) => {
+      serverSockets.add(socket);
+      socket.on('close', () => {
+        serverSockets.delete(socket);
+        socket.destroy();
+      });
+    }).on('error', (e:unknown) => {
+      // Handle server error
+      if (e instanceof Error) {
+        if (e.message.includes('EADDRINUSE') || e.message.includes('EACCES')) {
+          this.error(`LocalAPI server error: port ${serverPort} already in use`);
+        } else {
+          this.error(`LocalAPI server error: ${e.message}`);
+        }
+      } else {
+        this.error('LocalAPI server error: unknown error');
+      }
     });
+
+    function destroySockets(sockets: Set<Socket>) {
+      for (const socket of sockets.values()) {
+        socket.destroy();
+      }
+    }
+
+    destroySockets(serverSockets);
   }
 
 }
