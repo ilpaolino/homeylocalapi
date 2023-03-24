@@ -1,7 +1,6 @@
 import Homey from 'homey';
 import http, { IncomingMessage, ServerResponse } from 'http';
 import { EventEmitter } from 'events';
-import { Socket } from 'net';
 import LocalApiRequestArgs from './helpers/types/LocalApiRequestArgs';
 import LocalApiRequestState from './helpers/types/LocalApiRequestState';
 
@@ -108,7 +107,6 @@ class LocalApi extends Homey.App {
       this.requestReceivedArgs = await requestReceivedTrigger.getArgumentValues();
       this.log('LocalAPI: args updated');
     });
-    const serverSockets = new Set<Socket>();
     this.log('LocalAPI has been initialized');
 
     // Create a http server instance that can be used to listening on user defined port (or 3000, default).
@@ -125,7 +123,7 @@ class LocalApi extends Homey.App {
       } else if (this.isRouteAndMethodAuthorized(req)) {
         // Handle request
         try {
-          await requestReceivedTrigger.trigger({}, { request: req, response: res });
+          requestReceivedTrigger.trigger({}, { request: req, response: res });
 
           const argVal = await new Promise((resolve) => {
             this.localApiEvent.once('responseAction', (body:string) => {
@@ -154,12 +152,6 @@ class LocalApi extends Homey.App {
       req.destroy();
     }).listen(serverPort, () => {
       this.log(`LocalAPI server started at port ${serverPort}`);
-    }).on('connection', (socket: Socket) => {
-      serverSockets.add(socket);
-      socket.on('close', () => {
-        serverSockets.delete(socket);
-        socket.destroy();
-      });
     }).on('error', (e:unknown) => {
       // Handle server error
       if (e instanceof Error) {
@@ -172,14 +164,6 @@ class LocalApi extends Homey.App {
         this.error('LocalAPI server error: unknown error');
       }
     });
-
-    function destroySockets(sockets: Set<Socket>) {
-      for (const socket of sockets.values()) {
-        socket.destroy();
-      }
-    }
-
-    destroySockets(serverSockets);
   }
 
 }
