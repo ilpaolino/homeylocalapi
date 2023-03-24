@@ -26,5 +26,9 @@
   "1.1.3": {
     "en": "Bugfix in server: better memory handling",
     "it": "Bugfix su server: migliore gestione della memoria"
+  },
+  "1.1.4": {
+    "en": "Bugfix in server",
+    "it": "Bugfix su server"
   }
 }
