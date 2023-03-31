@@ -38,7 +38,8 @@ class LocalApi extends Homey.App {
 
   /**
    * Check if the request is authorized to be handled by the Local API
-   * @param req The node http request object
+   * @param url The url to check
+   * @param method The method to check
    */
   isRouteAndMethodAuthorized(url: string, method: string): boolean {
     return this.requestReceivedArgs.find((arg: LocalApiRequestArgs) => arg.url === url && arg.method === method.toLowerCase()) !== undefined;
@@ -120,10 +121,10 @@ class LocalApi extends Homey.App {
       if (this.isRouteAuthorized(req) && req.method === 'OPTIONS' && this.isCorsActive()) {
         // Handle CORS preflight request
         res.writeHead(200);
-      } else if (this.isRouteAndMethodAuthorized(req.url ?? "/", req.method ?? "")) {
+      } else if (this.isRouteAndMethodAuthorized(req.url ?? '/', req.method ?? '')) {
         // Handle request
         try {
-          requestReceivedTrigger.trigger({}, { url: req.url ?? "/", method: req.method?.toLowerCase() ?? "" });
+          requestReceivedTrigger.trigger({}, { url: req.url ?? '/', method: req.method?.toLowerCase() ?? '' });
 
           const argVal = await new Promise((resolve) => {
             this.localApiEvent.once('responseAction', (body:string) => {
